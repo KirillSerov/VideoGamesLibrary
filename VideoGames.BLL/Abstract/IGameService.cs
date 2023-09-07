@@ -2,8 +2,8 @@
 
 namespace VideoGames.BLL.Abstract
 {
-    public interface IGameService : IService<GameDTO>
+    public interface IGameService : IService<GameRequestDTO, GameResponseDTO>
     {
-        public Task<IEnumerable<GameDTO>> GetByGenreAsync(int genreId);
+        public Task<IEnumerable<GameResponseDTO>> GetByGenreAsync(int genreId);
     }
 }

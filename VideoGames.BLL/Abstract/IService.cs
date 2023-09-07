@@ -1,13 +1,14 @@
-﻿using VideoGames.BLL.Entities.Abstract;
+﻿using VideoGames.BLL.Domain;
+using VideoGames.BLL.Domain.Abstract;
 
 namespace VideoGames.BLL.Abstract
 {
-    public interface IService<TEntity> where TEntity : BaseDTO
+    public interface IService<TRequest, TResponse> where TRequest : BaseRequestDTO where TResponse : BaseResponseDTO
     {
-        Task AddAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(int id);
-        Task<IQueryable<TEntity>> GetAllAsync();
-        Task<TEntity?> GetAsync(int id);
+        Task<OperationResult> AddAsync(TRequest entity);
+        Task<OperationResult> UpdateAsync(TRequest entity);
+        Task<OperationResult> DeleteAsync(int id);
+        Task<IEnumerable<TResponse>> GetAllAsync();
+        Task<TResponse?> GetAsync(int id);
     }
 }

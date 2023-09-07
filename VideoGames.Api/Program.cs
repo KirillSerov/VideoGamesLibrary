@@ -32,6 +32,8 @@ namespace VideoGames.Api
 
             #region Репозитоории
             builder.Services.AddScoped<IGenericRepository<GameEntity>, EFGamesRepository>();
+            builder.Services.AddScoped<IGenericRepository<GenreEntity>, EFGenreRepository>();
+            builder.Services.AddScoped<IGenericRepository<CreaterEntity>, EFCreaterRepository>();
             #endregion
 
             #region Сервисы

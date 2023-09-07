@@ -18,22 +18,27 @@ namespace VideoGames.DAL.EFramework.Repositories
         {
             await _context.Set<TEntity>().AddAsync(entity);
             int count = await _context.SaveChangesAsync();
-            
+
             if (count > 0)
                 return true;
 
             return false;
         }
 
-        public async virtual Task DeleteAsync(int id)
+        public async virtual Task<bool> DeleteAsync(int id)
         {
             TEntity? entity = _context.Set<TEntity>().Find(id);
 
-            if (entity != null)
-            {
-                _context.Set<TEntity>().Remove(entity);
-                await _context.SaveChangesAsync();
-            }
+            if (entity == null)
+                return false;
+
+            _context.Set<TEntity>().Remove(entity);
+            int count = await _context.SaveChangesAsync();
+            
+            if(count == 0)
+                return false;
+
+            return true;
         }
 
         public async virtual Task<IQueryable<TEntity>> GetAllAsync()
@@ -46,10 +51,15 @@ namespace VideoGames.DAL.EFramework.Repositories
             return await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async virtual Task UpdateAsync(TEntity entity)
+        public async virtual Task<bool> UpdateAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            int count = await _context.SaveChangesAsync();
+
+            if (count == 0)
+                return false;
+
+            return true;
         }
     }
 }
